@@ -9,37 +9,26 @@ class WorkerController extends Controller
 {
     public function showWorkers()
     {
-        $workers = Worker::where('id', '<', 5000)
-                            ->select('id','name','chief_id')
+        $workers = Worker::where('level', '<=', 5)
+                            ->select('id','name','chief_id', 'level', 'position')
                             ->get()
                             ->toArray();
         
-        // $tree = $this->formTree($workers);
-        // $new = array();
-        foreach ($workers as $a){
-            $new[$a['chief_id']][] = $a;
+
+        foreach ($workers as $worker) {
+            $new[$worker['chief_id']][] = $worker;
         }
-        $tree = $this->createTree($new, $new[0]); // changed
-        return view('tree')->with(['tree' => $tree]);
-        print_r($tree);
+
+
+        //$tree = collect($this->createTree($new, $new[0])); // changed
+        $tree = $this->array_to_object($this->createTree($new, $new[0]));
+       // dd($tree);
+        //$childrens = $tree[0]['children'];
+        return view('tree')->with(['workers' => $tree]);
+        //print_r($tree);
 
         
     }
-    
-    // private function createTree(&$list, $parent){
-    //     $tree = '<ul>';
-    //     foreach ($parent as $k=>$l){
-    //         if(isset($list[$l['id']])){
-    //             //dd($l);
-    //             $tree .= '<li>' . $l['name'];
-    //             $tree .= $this->createTree($list, $list[$l['id']]);
-    //             $tree .= '</li>';
-    //         }
-    //         //$tree .= '<li>' . $l['children'] = $this->createTree($list, $list[$l['id']]);
-    //         $tree .= '</ul>';
-    //     } 
-    //     return $tree;
-    // }
 
     private function createTree(&$list, $parent){
         $tree = array();
@@ -51,5 +40,19 @@ class WorkerController extends Controller
         } 
         return $tree;
     }
-   
+
+    function array_to_object($array) {
+        $obj = new \stdClass();
+        foreach($array as $k => $v) {
+            if(strlen($k)) {
+                if(is_array($v)) {
+                    $obj->{$k} = $this->array_to_object($v); //RECURSION
+                } else {
+                    $obj->{$k} = $v;
+                }
+            }
+        }
+        return $obj;
+    }
+
 }

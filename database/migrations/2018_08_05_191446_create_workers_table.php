@@ -21,6 +21,7 @@ class CreateWorkersTable extends Migration
           $table->integer('salary')->nullable();
     
           $table->integer('chief_id')->nullable();
+          $table->integer('level')->nullable();
     
           $table->timestamps();
         });
