@@ -9,7 +9,7 @@ class WorkerController extends Controller
 {
     public function showWorkers()
     {
-        $workers = Worker::where('level', '<=', 5)
+        $workers = Worker::where('level', '<=', 2)
                             ->select('id','name','chief_id', 'level', 'position')
                             ->get()
                             ->toArray();
