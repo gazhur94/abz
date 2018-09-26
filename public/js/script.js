@@ -1,18 +1,36 @@
-$("h1").css("color", "red");
+// $(document).ready(function() {
+//     $(".worker").click(function() {
+//
+//        //var id = elem.value;
+//         //var value = $( this ).val();
+//        //var id = $("value").val();
+//         var id = $("a").attr("value");
+//        console.log(id);
+//     })
+// })
 
-$('#btn_start').click(function() {
-   
-    $("#message")
-        .html("new")
-        .css("background-color", "red")
-        .parent()
-        .css("background-color", "blue")
-        .width(150)
+function getSubordinates(id) {
+    //console.log(id);
 
-});
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'post',
+        url: '/workers/getSubstitutes/' + id,
+        contentType: false,
+        processData: false,
 
-$('#btn_reset').click(function() {
-   location.reload();
-});
+        success: function success(data) {
+            //var elem = $("<span></span>").html(data);
+            console.log(data);
+            var a = document.getElementById(id).append("<p>" + data + "</p>");
+           //var elem = $("<span></span>").text(data);
+            //console.log(data);
+            //$('#parent_document_select').html(fillSelectInput(data));
+        },
+
+    });
+}
 
 

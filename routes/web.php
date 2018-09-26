@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'WorkerController@showWorkers');
+Route::post('/workers/getSubstitutes/{id}', 'WorkerController@getSubstitutes');
 
 Auth::routes();
 

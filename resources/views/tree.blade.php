@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <title>Tree</title>
@@ -19,9 +20,9 @@
     @foreach ($workers as $worker)
 
          <ul>
-             <li>{{$worker->name . ' | ' . $worker->position}}</li>
+             <li><a href="#" onclick="getSubordinates({{$worker->id}})" id="{{$worker->id}}" style="text-decoration: none; color: black; cursor: pointer">{{$worker->name . ' | ' . $worker->position}}</a></li>
              @php($childrens = $worker->children)
-                @if(count($childrens) > 0)
+                @if($childrens || count($childrens) > 0)
                     @include('worker', ['workers' => $childrens])
                 @endif
         </ul>

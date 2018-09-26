@@ -30,6 +30,10 @@ class WorkerController extends Controller
         
     }
 
+    public function getSubstitutes() {
+        return 'abc';
+    }
+
     private function createTree(&$list, $parent){
         $tree = array();
         foreach ($parent as $k=>$l){

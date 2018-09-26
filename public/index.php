@@ -9,17 +9,28 @@
 
 define('LARAVEL_START', microtime(true));
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| our application. We just need to utilize it! We'll simply require it
-| into the script here so that we don't have to worry about manual
-| loading any of our classes later on. It feels great to relax.
-|
-*/
+// Выключение протоколирования ошибок
+error_reporting(0);
+
+// Включать в отчет простые описания ошибок
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+// Включать в отчет E_NOTICE сообщения (добавятся сообщения о
+// непроинициализированных переменных или ошибках в именах переменных)
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
+// Добавлять сообщения обо всех ошибках, кроме E_NOTICE
+error_reporting(E_ALL & ~E_NOTICE);
+
+// Добавлять в отчет все ошибки PHP (см. список изменений)
+error_reporting(E_ALL);
+
+// Добавлять в отчет все ошибки PHP
+error_reporting(-1);
+
+// То же, что и error_reporting(E_ALL);
+ini_set('error_reporting', E_ALL);
+
 
 require __DIR__.'/../vendor/autoload.php';
 
