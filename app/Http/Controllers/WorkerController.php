@@ -30,8 +30,13 @@ class WorkerController extends Controller
         
     }
 
-    public function getSubstitutes() {
-        return 'abc';
+    public function getSubstitutes($id) {
+        $workers = Worker::where('chief_id', '=', $id)
+            ->select('id','name','chief_id', 'level', 'position')
+            ->get()
+            ->toArray();
+        //return 'abc';
+        return json_encode($workers);
     }
 
     private function createTree(&$list, $parent){

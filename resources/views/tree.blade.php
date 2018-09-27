@@ -11,16 +11,11 @@
     <title>Tree</title>
 </head>
 <body>
-    <h1>hello</h1>
-    <button id="btn_start">1</button>
-    <button id="btn_reset">2</button>
-    <div>
-        <div id="message"></div>
-    </div>
+
     @foreach ($workers as $worker)
 
          <ul>
-             <li><a href="#" onclick="getSubordinates({{$worker->id}})" id="{{$worker->id}}" style="text-decoration: none; color: black; cursor: pointer">{{$worker->name . ' | ' . $worker->position}}</a></li>
+             <li onclick="getSubordinates({{$worker->id}})" id="{{$worker->id}}"><a href="#"  style="text-decoration: none; color: black; cursor: pointer">{{$worker->name . ' | ' . $worker->position}}</a></li>
              @php($childrens = $worker->children)
                 @if($childrens || count($childrens) > 0)
                     @include('worker', ['workers' => $childrens])

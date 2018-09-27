@@ -10,24 +10,40 @@
 // })
 
 function getSubordinates(id) {
-    //console.log(id);
+    console.log(id);
 
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         type: 'post',
+        dataType: "json",
         url: '/workers/getSubstitutes/' + id,
         contentType: false,
         processData: false,
 
         success: function success(data) {
-            //var elem = $("<span></span>").html(data);
-            console.log(data);
-            var a = document.getElementById(id).append("<p>" + data + "</p>");
-           //var elem = $("<span></span>").text(data);
-            //console.log(data);
-            //$('#parent_document_select').html(fillSelectInput(data));
+            var elem = document.getElementById(id);
+
+
+            $.each(data, function(k) {
+                var name = data[k].name;
+                var position = data[k].position;
+                var newId = data[k].id;
+                console.log(data[k].id);
+                $("<ul>" +
+                    "<li onclick=\"getSubordinates(data[k].id)\" id=\"data[k].id\">" +
+                        "<a style=\"text-decoration: none; color: black; cursor: pointer\">"
+                            + name + " | " + position + "" +
+                        "</a>" +
+                    "</li>" +
+                "</ul>")
+                .appendTo(elem);
+            });
+
+
+
+
         },
 
     });
