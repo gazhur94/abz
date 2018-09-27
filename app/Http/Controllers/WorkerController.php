@@ -30,7 +30,9 @@ class WorkerController extends Controller
         
     }
 
-    public function getSubstitutes($id) {
+    public function getSubstitutes(Request $request) {
+        $id = $request->id;
+        //$id = $request
         $workers = Worker::where('chief_id', '=', $id)
             ->select('id','name','chief_id', 'level', 'position')
             ->get()

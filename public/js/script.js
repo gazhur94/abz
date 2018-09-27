@@ -1,16 +1,4 @@
-// $(document).ready(function() {
-//     $(".worker").click(function() {
-//
-//        //var id = elem.value;
-//         //var value = $( this ).val();
-//        //var id = $("value").val();
-//         var id = $("a").attr("value");
-//        console.log(id);
-//     })
-// })
-
 function getSubordinates(id) {
-    console.log(id);
 
     $.ajax({
         headers: {
@@ -18,21 +6,24 @@ function getSubordinates(id) {
         },
         type: 'post',
         dataType: "json",
-        url: '/workers/getSubstitutes/' + id,
-        contentType: false,
+        contentType: "application/json",
+        data : JSON.stringify({
+            id: id
+        }),
+        url: '/workers/getSubstitutes',
+
         processData: false,
 
         success: function success(data) {
+            //console.log(data);
             var elem = document.getElementById(id);
-
 
             $.each(data, function(k) {
                 var name = data[k].name;
                 var position = data[k].position;
                 var newId = data[k].id;
-                console.log(data[k].id);
                 $("<ul>" +
-                    "<li onclick=\"getSubordinates(data[k].id)\" id=\"data[k].id\">" +
+                    "<li onclick=\"getSubordinates(" + newId + ")\" id=\"" + newId + "\">" +
                         "<a style=\"text-decoration: none; color: black; cursor: pointer\">"
                             + name + " | " + position + "" +
                         "</a>" +
@@ -40,10 +31,6 @@ function getSubordinates(id) {
                 "</ul>")
                 .appendTo(elem);
             });
-
-
-
-
         },
 
     });
